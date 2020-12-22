@@ -28,7 +28,7 @@ public class Movement : MonoBehaviour
     {
         if (shouldAddForce)
         {
-            rigidbody2D.velocity = new Vector2(differenceInX, differenceInY);
+            rigidbody2D.velocity = new Vector2(differenceInX*2, differenceInY*2);
             shouldAddForce = false;
         }
     }
