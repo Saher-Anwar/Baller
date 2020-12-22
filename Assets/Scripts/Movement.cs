@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,8 +11,10 @@ public class Movement : MonoBehaviour
     private float mouseXPosOnClick;
     private float mouseYPosOnClick;
     private float differenceInX, differenceInY;
-    private bool shouldAddForce = false;
+
+    private bool isMouseUp = false;
     private bool contactMade = false;
+    private bool hasJumped = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,15 +25,36 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!hasJumped)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                mouseXPosOnClick = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+                mouseYPosOnClick = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+            }
 
+            if (Input.GetMouseButtonUp(0))
+            {
+                float mouseUpXPos;
+                float mouseUpYPos;
+
+                mouseUpXPos = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+                mouseUpYPos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+                differenceInX = mouseXPosOnClick - mouseUpXPos;
+                differenceInY = mouseYPosOnClick - mouseUpYPos;
+
+                isMouseUp = true;
+            }
+        }
     }
 
     void FixedUpdate()
     {
-        if (shouldAddForce)
+        if (isMouseUp)
         {
             rigidbody2D.velocity = new Vector2(differenceInX*3, differenceInY*3);
-            shouldAddForce = false;
+            isMouseUp = false;
+            hasJumped = true;
         }
 
         if (contactMade && rigidbody2D.velocity.x != 0) 
@@ -50,6 +74,7 @@ public class Movement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         contactMade = true;
+        hasJumped = false;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -57,27 +82,4 @@ public class Movement : MonoBehaviour
         contactMade = false;
     }
 
-    private void OnMouseDown()
-    {
-        mouseXPosOnClick = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
-        mouseYPosOnClick = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
-    }
-
-    private void OnMouseDrag()
-    {
-        // this will probably be used for trail
-    }
-
-    private void OnMouseUp()
-    {
-        float mouseUpXPos;
-        float mouseUpYPos;
-
-        mouseUpXPos = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
-        mouseUpYPos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
-        differenceInX = mouseXPosOnClick - mouseUpXPos;
-        differenceInY = mouseYPosOnClick - mouseUpYPos;
-
-        shouldAddForce = true;
-    }
 }
