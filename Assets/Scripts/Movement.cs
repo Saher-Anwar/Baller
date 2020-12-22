@@ -6,11 +6,12 @@ using UnityEngine.UIElements;
 
 public class Movement : MonoBehaviour
 {
-    public Rigidbody2D rigidbody2D;
+    private Rigidbody2D rigidbody2D;
     private float mouseXPosOnClick;
     private float mouseYPosOnClick;
     private float differenceInX, differenceInY;
-    private bool shouldAddForce = false; 
+    private bool shouldAddForce = false;
+    private bool contactMade = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,17 +29,38 @@ public class Movement : MonoBehaviour
     {
         if (shouldAddForce)
         {
-            rigidbody2D.velocity = new Vector2(differenceInX*2, differenceInY*2);
+            rigidbody2D.velocity = new Vector2(differenceInX*3, differenceInY*3);
             shouldAddForce = false;
         }
+
+        if (contactMade && rigidbody2D.velocity.x != 0) 
+        {
+            float frictionValue = 0.09f;
+            if(rigidbody2D.velocity.x > 0)
+            {
+                rigidbody2D.velocity = rigidbody2D.velocity - new Vector2(frictionValue, 0);
+            }
+            else
+            {
+                rigidbody2D.velocity = rigidbody2D.velocity + new Vector2(frictionValue, 0);
+            }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        contactMade = true;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        contactMade = false;
     }
 
     private void OnMouseDown()
     {
         mouseXPosOnClick = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
         mouseYPosOnClick = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
-        print("on click x: " + mouseXPosOnClick);
-        print("on click y: " + mouseYPosOnClick);
     }
 
     private void OnMouseDrag()
@@ -55,12 +77,6 @@ public class Movement : MonoBehaviour
         mouseUpYPos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
         differenceInX = mouseXPosOnClick - mouseUpXPos;
         differenceInY = mouseYPosOnClick - mouseUpYPos;
-
-        print("on up x: " + mouseUpXPos);
-        print("on up y: " + mouseUpYPos);
-
-        print("difference x: " + differenceInX);
-        print("difference y: " + differenceInY);
 
         shouldAddForce = true;
     }
