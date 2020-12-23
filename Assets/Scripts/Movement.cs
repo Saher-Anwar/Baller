@@ -15,6 +15,7 @@ public class Movement : MonoBehaviour
     private float mouseXPosOnClick;
     private float mouseYPosOnClick;
     private float differenceInX, differenceInY;
+    public float power = 3.5f;
 
     private bool isMouseUp = false;
     private bool contactMade = false;
@@ -103,7 +104,6 @@ public class Movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        float power = 6;
         if (isMouseUp)
         {
             rigidbody2D.velocity = new Vector2(differenceInX*power, differenceInY*power);
@@ -139,7 +139,7 @@ public class Movement : MonoBehaviour
     public void pushUp()
     {
         // TODO add a vector to the laready existing rigibody velocity
-        rigidbody2D.velocity += new Vector2(0, 10f);
+        rigidbody2D.velocity += new Vector2(0, 13.5f);
     }
 
 }
