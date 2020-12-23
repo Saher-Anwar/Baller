@@ -38,12 +38,21 @@ public class Movement : MonoBehaviour
                 float mouseUpXPos;
                 float mouseUpYPos;
 
+                Time.timeScale = 1f;
+                Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
                 mouseUpXPos = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
                 mouseUpYPos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
                 differenceInX = mouseXPosOnClick - mouseUpXPos;
                 differenceInY = mouseYPosOnClick - mouseUpYPos;
 
                 isMouseUp = true;
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                Time.timeScale = 0.2f;
+                Time.fixedDeltaTime = 0.02f * Time.timeScale;
             }
         }
     }
