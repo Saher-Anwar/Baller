@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 public class Movement : MonoBehaviour
 {
     private Rigidbody2D rigidbody2D;
+    private LineRenderer lineRenderer;
     private float mouseXPosOnClick;
     private float mouseYPosOnClick;
     private float differenceInX, differenceInY;
@@ -20,17 +21,23 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Vector3 startPoint;
+        Vector3 endPoint;
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
         if (!hasJumped)
         {
             if (Input.GetMouseButtonDown(0))
             {
                 mouseXPosOnClick = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
                 mouseYPosOnClick = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
+                lineRenderer.enabled = true;
             }
 
             if (Input.GetMouseButtonUp(0))
@@ -47,12 +54,20 @@ public class Movement : MonoBehaviour
                 differenceInY = mouseYPosOnClick - mouseUpYPos;
 
                 isMouseUp = true;
+                lineRenderer.enabled = false;
             }
 
             if (Input.GetMouseButton(0))
             {
                 Time.timeScale = 0.2f;
                 Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+                startPoint = gameObject.transform.position;
+                startPoint.z = 0;
+                lineRenderer.SetPosition(0, startPoint);
+                endPoint = mousePos;
+                endPoint.z = 0;
+                lineRenderer.SetPosition(1, endPoint);
             }
         }
     }
