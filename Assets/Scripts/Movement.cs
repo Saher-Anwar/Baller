@@ -139,7 +139,7 @@ public class Movement : MonoBehaviour
     public void pushUp()
     {
         // TODO add a vector to the laready existing rigibody velocity
-        rigidbody2D.velocity = new Vector2(0, 15f);
+        rigidbody2D.velocity += new Vector2(0, 10f);
     }
 
 }
