@@ -82,4 +82,10 @@ public class Movement : MonoBehaviour
         contactMade = false;
     }
 
+    public void pushUp()
+    {
+
+        rigidbody2D.velocity = new Vector2(0, 15f);
+    }
+
 }
