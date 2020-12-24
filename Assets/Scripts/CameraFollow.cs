@@ -8,10 +8,8 @@ public class CameraFollow : MonoBehaviour
     public GameObject player;
     public float smoothSpeed = 0.125f;
     public Vector3 offset;
-    private bool wasBig = false;
 
     private Camera cam;
-    private float zoomOutFactor = 3f;
     private float targetZoom;
     private float zoomLerpSpeed = 10f;
 
