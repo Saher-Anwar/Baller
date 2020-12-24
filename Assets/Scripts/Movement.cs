@@ -110,19 +110,6 @@ public class Movement : MonoBehaviour
             isMouseUp = false;
             hasJumped = true;
         }
-
-        if (contactMade && rigidbody2D.velocity.x != 0) 
-        {
-            float frictionValue = 0.09f;
-            if(rigidbody2D.velocity.x > 0)
-            {
-                rigidbody2D.velocity = rigidbody2D.velocity - new Vector2(frictionValue, 0);
-            }
-            else
-            {
-                rigidbody2D.velocity = rigidbody2D.velocity + new Vector2(frictionValue, 0);
-            }
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -139,7 +126,7 @@ public class Movement : MonoBehaviour
     public void pushUp()
     {
         // TODO add a vector to the laready existing rigibody velocity
-        rigidbody2D.velocity += new Vector2(0, 13.5f);
+        rigidbody2D.velocity *= 2.5f;
     }
 
 }

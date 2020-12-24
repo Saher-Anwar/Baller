@@ -12,7 +12,8 @@ public class CameraFollow : MonoBehaviour
     private Camera cam;
     private float targetZoom;
     private float zoomLerpSpeed = 10f;
-
+    private float zoomOutValue = 10f;
+    private float zoomInValue = 5f;
     void Start()
     {
         cam = Camera.main;
@@ -29,12 +30,12 @@ public class CameraFollow : MonoBehaviour
 
         if (isXPositivelyFaster || isXNegativelyFaster || isYPositivelyFaster || isYNegativelyFaster)
         {
-            targetZoom = 8;
+            targetZoom = zoomOutValue;
             cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
         }
         else
         {
-            targetZoom = 5;
+            targetZoom = zoomInValue;
             cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
         }
 
