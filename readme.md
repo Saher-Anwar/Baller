@@ -1,7 +1,7 @@
-#**BALLER - Unity Game**
+# BALLER - Unity Game
 A 2-Dimensional game that uses the physics and particle system of the Unity Engine as well as C# for scripting purposes
 
-##**Technologies**
+## Technologies
 Project is created with:
 
 - Unity Hub: 2.4.2
@@ -9,7 +9,7 @@ Project is created with:
 - Visual Studio Community: 2019
 - Programming Language: C#
 
-##**Detailed Introduction**
+## Detailed Introduction
 I decided to create this game in the beginning of 2021 to familiarize myself with other parts of the Unity
 Engine which I hadn't touched upon much before. Since I had basic knowledge on Unity's physics system and scripting, 
 I wanted to create a simple game but add a lot of visual effects to it to familiarize myself with the Unity's particle 
